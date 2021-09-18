@@ -14,21 +14,24 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
+    //declaring view model
     private val viewModel = ViewModelProvider.NewInstanceFactory().create(CharacterViewModel::class.java)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        //call api from view model
         viewModel.characterApi(context = this@MainActivity)
+
         observeResponse()
     }
-
+    //observing data from api
     private fun observeResponse() {
         viewModel.followersList.observe(this, {
             setAdapter(it)
         })
     }
 
-
+// setting adapter view
     private fun setAdapter(list: Array<CharacterModel>) {
         mainRv.adapter = CharacterAdapter(list, this@MainActivity)
         mainRv.layoutManager = GridLayoutManager(this, 2)

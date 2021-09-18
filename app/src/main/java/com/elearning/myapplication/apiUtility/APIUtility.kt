@@ -13,22 +13,30 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-open class APIUtility (val context: Context){
+open class APIUtility(val context: Context) {
 
     val TAG = "APIUTILITY"
-    open fun characterApi(context: Context, dialog: Boolean,  listener: APIResponseListener<Array<CharacterModel>>) {
+    open fun characterApi(
+        context: Context,
+        dialog: Boolean,
+        listener: APIResponseListener<Array<CharacterModel>>
+    ) {
         showDialog(context, dialog)
         networkCheck(context)
-        val apiServices: ApiServices = RetrofitInstance(context).getInstance().create(ApiServices::class.java)
+        val apiServices: ApiServices =
+            RetrofitInstance(context).getInstance().create(ApiServices::class.java)
         val call: Call<Array<CharacterModel>> = apiServices.characterAPI()
         call.enqueue(object : Callback<Array<CharacterModel>?> {
-            override fun onResponse(call: Call<Array<CharacterModel>?>, response: Response<Array<CharacterModel>?>) {
+            override fun onResponse(
+                call: Call<Array<CharacterModel>?>,
+                response: Response<Array<CharacterModel>?>
+            ) {
                 if (response.body() != null) {
                     Log.e(TAG, "onResponse: " + Gson().toJson(response.body()))
-                       listener.onReceiveResponse(response.body()!!)
-                }else{
-                    showToast(context,response.message())
-                    Log.e(TAG, "onResponse: "+response.message()+"--code"+response.code() )
+                    listener.onReceiveResponse(response.body()!!)
+                } else {
+                    showToast(context, response.message())
+                    Log.e(TAG, "onResponse: " + response.message() + "--code" + response.code())
                 }
                 dismissDialog(dialog)
             }
@@ -40,12 +48,15 @@ open class APIUtility (val context: Context){
             }
         })
     }
+
+    //listeners
     interface APIResponseListener<T> {
         fun onReceiveResponse(response: T)
         // fun onResponseFailed();
         //fun onStatusFalse(response: T);
     }
 
+    //network check
     private fun networkCheck(context: Context) {
         if (!CommonUtils.isNetworkAvailable(context)) {
             CommonUtils.displayNetworkAlert(context, false)
@@ -53,6 +64,7 @@ open class APIUtility (val context: Context){
         }
     }
 
+    // show dialog
     fun showDialog(context: Context?, isDialog: Boolean) {
         if (isDialog) {
             if (context != null) {
@@ -67,6 +79,7 @@ open class APIUtility (val context: Context){
         }
     }
 
+    //show toast
     fun showToast(context: Context, message: String) {
         Toast.makeText(
             context,

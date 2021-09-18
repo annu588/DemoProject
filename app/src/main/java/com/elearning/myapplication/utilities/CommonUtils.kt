@@ -9,6 +9,7 @@ import com.gdacciaro.iOSDialog.iOSDialogBuilder
 
 class CommonUtils {
     companion object{
+        //checking whether network is available or not
         fun isNetworkAvailable(mContext: Context): Boolean {
             /* getting systems Service connectivity manager */
             val mConnectivityManager = mContext
@@ -21,7 +22,7 @@ class CommonUtils {
             }
             return false
         }
-
+// dialog to display there is no internet connection
         fun displayNetworkAlert(context: Context,  isFinish: Boolean) {
             iOSDialogBuilder(context)
                 .setTitle("Network Error")
@@ -39,22 +40,7 @@ class CommonUtils {
         }
 
 
-        /* fun displayNetworkAlert(context: Context, isFinish: Boolean) {
-            AlertDialog.Builder(context)
-                .setMessage("Please Check Your Internet Connection and Try Again")
-                .setTitle("Network Error")
-                .setCancelable(false)
-                .setNeutralButton(
-                    android.R.string.ok
-                ) { dialog, whichButton ->
-                    if (isFinish) {
-                        dialog.dismiss()
-                        (context as Activity).finish()
-                    } else {
-                        dialog.dismiss()
-                    }
-                }.show()
-        }*/
+
 
     }
 

@@ -19,12 +19,7 @@ class RetrofitInstance (val context: Context){
         Interceptor {
             val ongoing: Request.Builder = it.request().newBuilder()
             ongoing.addHeader("Accept", "application/json;versions=1")
-          /*  if (!Preferences.getPreference(context, PrefEntities.TOKEN).isEmpty()) {
-                ongoing.addHeader(
-                    "Authorization",
-                    "Bearer " + Preferences.getPreference(context, PrefEntities.TOKEN)
-                )
-            }*/
+
              it.proceed(ongoing.build()) }).build()
 
 
